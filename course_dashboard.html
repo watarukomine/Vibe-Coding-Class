@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibe Coding Class Dashboard</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Yomogi&family=Zen+Maru+Gothic:wght@500;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-pattern: #fdf6e3;
+            --wood-frame: #8d6e63;
+            --blackboard-bg: #2b4539;
+            --chalk-white: #fcfcfc;
+            --chalk-yellow: #fff9c4;
+            --chalk-pink: #f8bbd0;
+            --paper-bg: #ffffff;
+            --sidebar-bg: #fff3e0;
+            --text-color: #4e342e;
+            --accent-color: #ffab91;
+            --code-bg: #263238;
+            --code-text: #eceff1;
+        }
+
+        body {
+            font-family: 'Zen Maru Gothic', sans-serif;
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            background-color: var(--bg-pattern);
+            background-image: radial-gradient(#d7ccc8 1px, transparent 1px);
+            background-size: 20px 20px;
+            color: var(--text-color);
+            overflow: hidden;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background-color: var(--sidebar-bg);
+            border-right: 8px solid var(--wood-frame);
+            padding: 20px 10px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+        }
+
+        .logo {
+            font-family: 'Yomogi', cursive;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--text-color);
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 2px dashed Var(--wood-frame);
+            border-radius: 10px;
+            background: #fff;
+            transform: rotate(-2deg);
+        }
+
+        .nav-item {
+            padding: 15px 15px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            border-radius: 4px 15px 15px 4px;
+            transition: all 0.2s;
+            color: var(--text-color);
+            font-weight: bold;
+            border-left: 5px solid transparent;
+            font-size: 1.1rem;
+        }
+
+        .nav-item:hover {
+            background-color: #ffe0b2;
+            transform: translateX(5px);
+        }
+
+        .nav-item.active {
+            background-color: var(--accent-color);
+            color: #fff;
+            border-left: 5px solid #ff7043;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Main Content */
+        .main {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Blackboard Header */
+        .blackboard-header {
+            width: 90%;
+            max-width: 900px;
+            background-color: var(--blackboard-bg);
+            color: var(--chalk-white);
+            padding: 20px 40px;
+            border-radius: 8px;
+            border: 12px solid var(--wood-frame);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            margin-bottom: 30px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .blackboard-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMDUiLz4KPC9zdmc+');
+            pointer-events: none;
+        }
+
+        .blackboard-header h1 {
+            font-family: 'Yomogi', cursive;
+            font-size: 2.2rem;
+            margin: 0;
+            text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.5);
+        }
+
+        .blackboard-header p {
+            font-family: 'Yomogi', cursive;
+            color: var(--chalk-yellow);
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+
+        /* Section Display Control */
+        .section-content {
+            display: none;
+            width: 90%;
+            max-width: 900px;
+            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .section-content.active {
+            display: block;
+        }
+
+        @keyframes popIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95) translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: -5px;
+            padding-left: 20px;
+            z-index: 5;
+            position: relative;
+        }
+
+        .tab {
+            padding: 10px 25px;
+            background-color: #ffd54f;
+            border-radius: 10px 25px 0 0;
+            cursor: pointer;
+            font-weight: bold;
+            color: var(--text-color);
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+            border: 1px solid #f9a825;
+            border-bottom: none;
+            font-family: 'Yomogi', cursive;
+            font-size: 1.1rem;
+        }
+
+        .tab:hover {
+            transform: translateY(-3px);
+        }
+
+        .tab.active {
+            background-color: #fff;
+            background-image: linear-gradient(to bottom, #fff 90%, #eee 100%);
+            z-index: 6;
+            height: 40px;
+            margin-top: -5px;
+            box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.05);
+            border-color: #e0e0e0;
+        }
+
+        .tab-content {
+            background-color: var(--paper-bg);
+            padding: 40px;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 4;
+            min-height: 500px;
+            background-image: linear-gradient(#e1f5fe 1px, transparent 1px);
+            background-size: 100% 30px;
+            line-height: 30px;
+        }
+
+        /* Content Styling */
+        h2 {
+            font-family: 'Yomogi', cursive;
+            font-size: 1.8rem;
+            margin-top: 40px;
+            color: #d84315;
+            border-bottom: 2px dashed #d84315;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        h2:first-of-type {
+            margin-top: 0;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            margin-top: 30px;
+            color: #ef6c00;
+            background: rgba(255, 224, 178, 0.4);
+            padding: 5px 15px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        p,
+        li {
+            font-size: 1.05rem;
+        }
+
+        strong {
+            background: linear-gradient(transparent 70%, #ffcc80 70%);
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid #e0e0e0;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 3px 3px 0 #eeeeee;
+        }
+
+        /* Code & Prompts */
+        .code-block {
+            background-color: var(--code-bg);
+            color: var(--code-text);
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            border-left: 6px solid #ffb74d;
+            box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.1);
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+
+        .prompt-box {
+            background-color: #fffde7;
+            border: 3px dashed #fbc02d;
+            padding: 25px;
+            border-radius: 20px;
+            margin: 30px 0;
+            position: relative;
+            box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.05);
+        }
+
+        .prompt-label {
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background: #fbc02d;
+            color: #fff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-family: 'Yomogi', cursive;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #ffca28;
+            color: #3e2723;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            font-family: 'Yomogi', sans-serif;
+            box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1);
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            transform: scale(1.05);
+            background-color: #ffc107;
+        }
+
+        .copy-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Tables for Agenda */
+        .agenda-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background: #fff;
+        }
+
+        .agenda-table th,
+        .agenda-table td {
+            border: 2px solid #e0e0e0;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .agenda-table th {
+            background-color: #fff3e0;
+            color: #e65100;
+            font-family: 'Yomogi', cursive;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">🚀 VC School</div>
+        <div class="nav-item active" onclick="showSection('intro')">🏫 ホームルーム</div>
+        <div class="nav-item" onclick="showSection('session1')">🎨 1限目 HTML</div>
+        <div class="nav-item" onclick="showSection('session2')">🐧 2限目 React</div>
+        <div class="nav-item" onclick="showSection('session3')">🤖 3限目 GAS</div>
+        <div class="nav-item" onclick="showSection('session4')">🐍 4限目 Python</div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main">
+
+        <!-- INTRO -->
+        <div id="intro" class="section-content active">
+            <div class="blackboard-header">
+                <h1>バイブコーディング講座</h1>
+                <p>〜 Antigravityと創る次世代開発マスタークラス 〜</p>
+            </div>
+
+            <div class="tab-content" style="min-height: 200px; text-align: center;">
+                <h2>👋 先生、準備はいいですか？</h2>
+                <div style="max-width: 600px; margin: 30px auto; text-align: left;">
+                    <p>このダッシュボードは、講義を成功させるための司令塔です。<br>
+                        各回の授業は、以下の<strong>3つのタブ</strong>で構成されています。</p>
+                </div>
+
+                <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                    <div
+                        style="background:#fff3e0; padding:20px; border-radius:15px; width:200px; border:2px solid #ffe0b2;">
+                        <div style="font-size:40px;">⏱</div>
+                        <h3>今日のアジェンダ</h3>
+                        <p style="font-size:0.9rem;">タイムスケジュール、本日のゴール、準備物の確認。</p>
+                    </div>
+                    <div
+                        style="background:#e1f5fe; padding:20px; border-radius:15px; width:200px; border:2px solid #b3e5fc;">
+                        <div style="font-size:40px;">🎓</div>
+                        <h3>座学 (Deep Dive)</h3>
+                        <p style="font-size:0.9rem;">専門用語の解説、仕組みの図解など、さらに詳しい知識。</p>
+                    </div>
+                    <div
+                        style="background:#e8f5e9; padding:20px; border-radius:15px; width:200px; border:2px solid #c8e6c9;">
+                        <div style="font-size:40px;">💻</div>
+                        <h3>実践 (Hands-on)</h3>
+                        <p style="font-size:0.9rem;">実技の手順と、Antigravityへの「呪文(プロンプト)」集。</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 50px;">
+                    <button onclick="showSection('session1'); switchTab('s1', 'agenda');"
+                        style="background:var(--accent-color); color:#fff; border:none; padding:15px 40px; font-size:1.2rem; border-radius:50px; cursor:pointer; font-weight:bold; box-shadow:0 5px 15px rgba(255,112,67,0.3); font-family:'Yomogi', cursive;">
+                        1限目の授業へ行く 👉
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- SESSION 1 -->
+        <div id="session1" class="section-content">
+            <div class="blackboard-header">
+                <h1>1限目：Webの「顔」を作る</h1>
+                <p>HTML / CSS / 環境構築</p>
+            </div>
+
+            <div class="tabs">
+                <div class="tab active" onclick="switchTab('s1', 'agenda')">⏱ 今日のアジェンダ</div>
+                <div class="tab" onclick="switchTab('s1', 'lecture')">🎓 座学 (Deep Dive)</div>
+                <div class="tab" onclick="switchTab('s1', 'practice')">💻 実践 (呪文集)</div>
+            </div>
+
+            <!-- S1: Agenda -->
+            <div id="s1-agenda" class="tab-content">
+                <div class="card">
+                    <h2>今日のゴール</h2>
+                    <p>プログラミング環境を整え、<strong>「自分だけのポートフォリオサイト」</strong>を公開すること。</p>
+                    <p>初日はコードを書くことよりも、<strong>「Antigravity（AI）との付き合い方」</strong>を覚えるのが最大の目的です。</p>
+                </div>
+
+                <table class="agenda-table">
+                    <tr>
+                        <th width="20%">時間</th>
+                        <th>内容</th>
+                    </tr>
+                    <tr>
+                        <td>00:00 - 00:10</td>
+                        <td><strong>オープニング</strong><br>この講座のコンセプト説明・アイスブレイク</td>
+                    </tr>
+                    <tr>
+                        <td>00:10 - 00:30</td>
+                        <td><strong>環境構築ハンズオン</strong><br>Python & Antigravityのインストール</td>
+                    </tr>
+                    <tr>
+                        <td>00:30 - 00:45</td>
+                        <td><strong>座学：HTML/CSSの基礎</strong><br>AIが書いたコードを「読む」ための知識</td>
+                    </tr>
+                    <tr>
+                        <td>00:45 - 01:25</td>
+                        <td><strong>実技：LP制作</strong><br>プロンプトによるサイト作成・修正体験</td>
+                    </tr>
+                    <tr>
+                        <td>01:25 - 01:30</td>
+                        <td><strong>クロージング</strong><br>成果発表・次回予告</td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- S1: Lecture -->
+            <div id="s1-lecture" class="tab-content" style="display:none;">
+                <div class="card">
+                    <h2>概念：バイブコーディング的 Webの仕組み</h2>
+                    <p>Webサイトは、大きく2つの要素でできています。これを人体に例えるとわかりやすいです。</p>
+                    <ul>
+                        <li><strong>HTML (HyperText Markup Language)</strong>:
+                            骨格・筋肉。「ここに画像」「ここに見出し」という構造を定義します。これがないと何も表示されません。</li>
+                        <li><strong>CSS (Cascading Style Sheets)</strong>:
+                            服・メイク。「文字を赤く」「右寄せに」という装飾を担当します。すっぴんでも機能はしますが、ユーザーを惹きつけるには必須です。</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h2>技術解説：DOMツリーの理解</h2>
+                    <p>AIが出力するコードでよく見る「入れ子構造」について。</p>
+                    <div class="code-block">
+                        &lt;div class="container"&gt;
+                        &lt;h1&gt;私の名前&lt;/h1&gt;
+                        &lt;p&gt;自己紹介です&lt;/p&gt;
+                        &lt;/div&gt;</div>
+                    <p>この <code>div</code> が「箱」で、その中に <code>h1</code> (タイトル) や <code>p</code> (文章) が入っています。<br>
+                        <strong>「親要素のデザイン(CSS)は、子要素に遺伝することがある」</strong><br>
+                        これを知っておくと、「なんでここが赤いの？」という謎が解けます。
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h2>AIハンドリング：修正のコツ</h2>
+                    <p>「なんかダサい」ではなく、具体的に指示する語彙力を養いましょう。</p>
+                    <ul>
+                        <li>❌ 「いい感じにして」 → AI任せ（運ゲー）</li>
+                        <li>⭕
+                            「<strong>パステルカラー</strong>を基調にして」「<strong>余白（マージン）</strong>をもっと広くして」「スマホで見たら<strong>縦並び（カラム落ち）</strong>にして」
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- S1: Practice -->
+            <div id="s1-practice" class="tab-content" style="display:none;">
+                <h2>🛠 Step 0: 環境構築</h2>
+                <div class="code-block">
+                    # Mac (Terminal)
+                    brew install python
+                    pip install antigravity-cli
+
+                    # Windows (PowerShell)
+                    # 公式サイトからインストーラーDL & 実行
+                    pip install antigravity-cli
+
+                    # ログイン & 確認
+                    antigravity login
+                    antigravity hello</div>
+
+                <h2>🎨 Step 1: ベースを作成する</h2>
+                <p>まずは土台を作らせます。以下のプロンプトを生徒に共有してください。</p>
+
+                <div class="prompt-box">
+                    <span class="prompt-label">Prompt 1</span>
+                    <button class="copy-btn" onclick="copyText(this)">コピーする</button>
+                    HTML5とCSS3を使って、私の「Webポートフォリオサイト」を作ってください。<br><br>
+                    【要件】<br>
+                    1. ヒーローセクション（ファーストビュー）：名前とキャッチコピー、背景はおしゃれなグラデーション。<br>
+                    2. 自己紹介セクション：プロフィール画像とテキスト。<br>
+                    3. スキルセクション：できることをアイコン付きでカード形式で並べる。<br>
+                    4. 全体的に「シンプルモダン」なデザインで、レスポンシブ対応（スマホ対応）も必須です。<br>
+                    5. ファイルは `index.html` と `style.css` に分けて保存してください。
+                </div>
+
+                <h2>🔧 Step 2: 修正指示 (イテレーション)</h2>
+                <p>一度で完璧なものは出ません。「対話」して直していく過程を見せます。</p>
+
+                <div class="prompt-box">
+                    <span class="prompt-label">Prompt 2</span>
+                    <button class="copy-btn" onclick="copyText(this)">コピーする</button>
+                    ありがとうございます！とても良いですが、以下の点を修正してください。<br><br>
+                    1. 全体のフォントを「Noto Sans JP」などのGoogle Fontsを使って見やすくしてください。<br>
+                    2. ヒーローセクションの文字色が背景に埋もれて見にくいです。文字に影をつけるか、背景色を調整してコントラストを上げてください。<br>
+                    3. スキルセクションのカードに、マウスを乗せたとき（ホバー時）にふわっと浮き上がるアニメーションを追加してください。
+                </div>
+
+                <h2>🚀 Step 3: 確認・公開</h2>
+                <p><code>open index.html</code> でブラウザ確認。完成したら拍手！</p>
+            </div>
+        </div>
+
+        <!-- SESSION 2 -->
+        <div id="session2" class="section-content">
+            <div class="blackboard-header">
+                <h1>2限目：Webに「命」を吹き込む</h1>
+                <p>React / JS / 案件シミュレーター</p>
+            </div>
+
+            <div class="tabs">
+                <div class="tab active" onclick="switchTab('s2', 'agenda')">⏱ 今日のアジェンダ</div>
+                <div class="tab" onclick="switchTab('s2', 'lecture')">🎓 座学 (Deep Dive)</div>
+                <div class="tab" onclick="switchTab('s2', 'practice')">💻 実践 (呪文集)</div>
+            </div>
+
+            <!-- S2: Agenda -->
+            <div id="s2-agenda" class="tab-content">
+                <div class="card">
+                    <h2>今日のゴール</h2>
+                    <p>Reactを使って、ユーザーの操作に応じてリアルタイムに金額が変わる<strong>「見積もりシミュレーター」</strong>を完成させること。<br>
+                        静的なWebページから、動的な「Webアプリケーション」への進化を体験します。</p>
+                </div>
+                <table class="agenda-table">
+                    <tr>
+                        <th width="20%">時間</th>
+                        <th>内容</th>
+                    </tr>
+                    <tr>
+                        <td>00:00 - 00:10</td>
+                        <td><strong>振り返り</strong><br>前回のHTML復習</td>
+                    </tr>
+                    <tr>
+                        <td>00:10 - 00:30</td>
+                        <td><strong>座学：Reactの魔法</strong><br>State（状態）について理解する</td>
+                    </tr>
+                    <tr>
+                        <td>00:30 - 01:20</td>
+                        <td><strong>実技：アプリ開発</strong><br>UI作成 → ロジック実装 → ビジネス用件追加</td>
+                    </tr>
+                    <tr>
+                        <td>01:20 - 01:30</td>
+                        <td><strong>クロージング</strong></td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- S2: Lecture -->
+            <div id="s2-lecture" class="tab-content" style="display:none;">
+                <div class="card">
+                    <h2>JSのキホン：変数と関数</h2>
+                    <p>AIコードを読むための最低限の知識。</p>
+                    <ul>
+                        <li><strong><code>const price = 1000;</code></strong><br>定数。中身を変えられない箱。「基本はこれを使う」と覚えればOK。</li>
+                        <li><strong><code>let total = 0;</code></strong><br>変数。中身を書き換えられる箱。計算結果を入れるときなどに使う。</li>
+                        <li><strong><code>const calculate = () => { ... }</code></strong><br>アロー関数。処理の塊。「この呪文を唱えると、波括弧の中身が実行される」イメージ。
+                        </li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h2>Reactのキホン：State (状態)</h2>
+                    <p><strong>「データが変われば、見た目も勝手に変わる」</strong><br>
+                        これがjQueryなどの昔の技術とReactの決定的な違いです。</p>
+                    <div class="code-block">const [count, setCount] = useState(0);</div>
+                    <p>
+                        1. <code>count</code>: 現在の数字（最初は0）<br>
+                        2. <code>setCount</code>: 数字を変えるための専用リモコン<br>
+                        <strong>ルール</strong>: <code>count = 1</code> と直接書き換えてはダメ（反映されない）。必ず <code>setCount(1)</code>
+                        とリモコンを使うこと。そうすると画面がパッと書き換わる。
+                </div>
+            </div>
+
+            <!-- S2: Practice -->
+            <div id="s2-practice" class="tab-content" style="display:none;">
+                <h2>🏗 Step 1: アプリの土台作り</h2>
+                <div class="prompt-box">
+                    <span class="prompt-label">Prompt 1 (UI)</span>
+                    <button class="copy-btn" onclick="copyText(this)">コピーする</button>
+                    ReactとViteを使って、「MyQuoteSimulator」というWeb見積もりツールを新規作成してください。<br>
+                    デザインは信頼感のある「ビジネスブルー」を使い、シンプルで清潔感のあるレイアウトにしてください。<br><br>
+                    画面の構成：<br>
+                    左側：ユーザーが選択するフォーム（プラン選択ラジオボタン、オプションチェックボックスなど）<br>
+                    右側（または下部）：現在の合計金額が大きく表示されるエリア、および「詳細内訳」の表示。<br><br>
+                    まずは機能はなくていいので、このレイアウトの見た目 (UI) だけを作ってください。
+                </div>
+
+                <h2>🧠 Step 2: 計算脳 (State) の実装</h2>
+                <div class="prompt-box">
+                    <span class="prompt-label">Prompt 2 (Logic)</span>
+                    <button class="copy-btn" onclick="copyText(this)">コピーする</button>
+                    さっき作った画面に計算機能を追加してください。<br>
+                    以下の料金設定で、ユーザーの選択に応じて「合計金額」がリアルタイムで変わるようにしてください：<br><br>
+                    1. プラン選択 (ラジオボタン):<br>
+                    - ライトプラン: 100,000円<br>
+                    - スタンダードプラン: 300,000円<br>
+                    - プレミアムプラン: 500,000円<br><br>
+                    2. オプション (チェックボックス):<br>
+                    - SEO対策: +50,000円<br>
+                    - 多言語対応: +100,000円<br>
+                    - CMS導入: +80,000円<br><br>
+                    Reactの useState を使って、合計金額を常に再計算して表示してください。<br>
+                    金額表示は「¥150,000」のようにカンマ区切りで見やすくしてください。
+                </div>
+
+                <h2>💼 Step 3: ビジネス要件の追加</h2>
+                <div class="prompt-box">
+                    <span class="prompt-label">Prompt 3 (Biz Logic)</span>
+                    <button class="copy-btn" onclick="copyText(this)">コピーする</button>
+                    さらに「納期」の概念を追加してください。<br>
+                    スライダーまたはセレクトボックスで「希望納期」を選べるようにします。<br><br>
+                    - 「通常 (1ヶ月以上)」: 追加料金なし<br>
+                    - 「お急ぎ (2週間以内)」: 合計金額の20%増し (1.2倍)<br><br>
+                    この計算ロジックを追加し、お急ぎの場合は合計金額の横に「※特急料金適用」という赤字の注釈を出してください。
+                </div>
+            </div>
+        </div>
+
+        <!-- SESSION 3 -->
+        <div id="session3" class="section-content">
+            <div class="blackboard-header">
+                <h1>3限目：業務を「自動化」する魔法</h1>
+                <p>Google Apps Script (GAS)</p>
+            </div>
+
+            <div class="tabs">
+                <div class="tab active" onclick="switchTab('s3', 'agenda')">⏱ 今日のアジェンダ</div>
+                <div class="tab" onclick="switchTab('s3', 'lecture')">🎓 座学 (Deep Dive)</div>
+                <div class="tab" onclick="switchTab('s3', 'practice')">💻 実践 (呪文集)</div>
+            </div>
+
+            <!-- S3: Agenda -->
+            <div id="s3-agenda" class="tab-content">
+                <div class="card">
+                    <h2>今日のゴール</h2>
+                    <p>Gmail、フォーム、スプレッドシートを連携させた<strong>「完全自動化システム」</strong>を作ること。<br>
+                        サーバーサイドスクリプト(GAS)を用いて、人が寝ている間も働くボットを構築します。</p>
+                </div>
+                <table class="agenda-table">
+                    <tr>
+                        <th width="20%">時間</th>
+                        <th>内容</th>
+                    </tr>
+                    <tr>
+                        <td>00:00 - 00:15</td>
+                        <td><strong>座学：GAS基礎</strong><br>サーバーサイド、トリガー、権限について</td>
+                    </tr>
+                    <tr>
+                        <td>00:15 - 00:20</td>
+                        <td><strong>準備</strong><br>フォーム作成とシート連携</td>
+                    </tr>
+                    <tr>
+                        <td>00:20 - 01:00</td>
+                        <td><strong>実技：自動返信ボット</strong><br>コード生成、貼り付け、トリガー設定</td>
+                    </tr>
+                    <tr>
+                        <td>01:00 - 01:15</td>
+                        <td><strong>デバッグ講座</strong><br>エラーの見方と対処法</td>
+                    </tr>
+                    <tr>
+                        <td>01:15 - 01:30</td>
+                        <td><strong>応用アイデア出し</strong></td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- S3: Lecture -->
+            <div id="s3-lecture" class="tab-content" style="display:none;">
+                <div class="card">
+                    <h2>GASのオブジェクト指向</h2>
+                    <p>GASはGoogleのサービスを「モノ (Object)」として扱います。</p>
+                    <ul>
+                        <li><code>GmailApp</code>: メール機能全体をつかさどる神様。</li>
+                        <li><code>SpreadsheetApp</code>: 表計算機能の神様。</li>
+                        <li><code>DriveApp</code>: Googleドライブの神様。</li>
+                    </ul>
+                    <p><code>GmailApp.sendEmail()</code> のように、「神様.奇跡を起こせ()」と命令するイメージです。</p>
+                </div>
+                <div class="card">
+                    <h2>トリガー：ボットの起動スイッチ</h2>
+                    <p>コードを書いただけでは動きません。「いつ」動くかを設定する必要があります。</p>
+                    <ul>
+                        <li><strong>シンプルトリガー</strong>: <code>onEdit</code> など。設定不要だが権限が弱い。</li>
+                        <li><strong>インストーラブルトリガー</strong>: 時計マークから設定。強力。「毎日朝9時」「フォーム送信時」などはこっち。今回はこれを使います。</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h2>トラブルシューティング：権限と承認</h2>
+                    <p>GAS初心者の9割がハマるのが「承認(Authorization)」の壁。</p>
+                    <p>1. 初回実行時にポップアップが出る。<br>
+                        2. 「権限を確認」→ アカウント選択。<br>
+                        3. 「このアプリはGoogleにより確認されていません」と出る（怖い）。<br>
+                        4. <strong>左下の「詳細」を押す → 「(安全ではないページ)に移動」を押す。</strong><br>
+                        ここを突破しないと動きません。</p>
+                </div>
+            </div>
+
+            <!-- S3: Practice -->
+            <div id="s3-practice" class="tab-content" style="display:none;">
+                <h2>🤖 Step 1: 自動返信メールの実装</h2>
+                <div class="prompt-box">
+                    <span class="prompt-label">Prompt 1 (Base)</span>
+                    <button class="copy-btn" onclick="copyText(this)">コピーする</button>
+                    Google Apps Script (GAS) のコードを書いてください。<br><br>
+                    やりたいこと：Googleフォームから回答が送信されたら、トリガー機能を使って自動的にサンクスメールを送信したいです。<br>
+                    スクリプトは、フォーム回答用スプレッドシートの「コンテナバインドスクリプト」として作成します。<br><br>
+                    フォームの質問項目（列）：<br>
+                    1. タイムスタンプ<br>
+                    2. お名前<br>
+                    3. メールアドレス<br>
+                    4. 問い合わせ内容<br><br>
+                    送信するメール：<br>
+                    - 宛先：回答者のメールアドレス<br>
+                    - 件名：【自動応答】お問い合わせを受け付けました<br>
+                    - 本文：丁寧なビジネスメール形式で。問い合わせ内容も引用してください。<br><br>
+                    コードには初心者でも分かる日本語コメントを多めに入れてください。
+                </div>
+
+                <h2>⚡️ Step 2: 条件分岐 (至急対応)</h2>
+                <div class="prompt-box">
+                    <span class="prompt-label">Prompt 2 (Logic)</span>
+                    <button class="copy-btn" onclick="copyText(this)">コピーする</button>
+                    さっきのコードを修正して、条件分岐を追加してください。<br><br>
+                    もし「問い合わせ内容」の中に「至急」または「急ぎ」という言葉が含まれていた場合だけ、<br>
+                    メールの件名と本文を以下のように変更してください。<br><br>
+                    - 件名：【至急】お問い合わせを受け付けました（優先対応）<br>
+                    - 本文の冒頭：「※このお問い合わせは緊急として受け付けました。担当者が優先的に確認します。」<br><br>
+                    それ以外の場合は通常のメールを送ってください。
+                </div>
+
+                <h2>👀 Step 3: 管理者への通知 (Cc/Bcc実践)</h2>
+                <div class="prompt-box">
+                    <span class="prompt-label">Prompt 3 (Admin)</span>
+                    <button class="copy-btn" onclick="copyText(this)">コピーする</button>
+                    さらに、お客様への返信と同時に、管理者（admin@example.com）にも通知が届くようにしてください。<br>
+                    `GmailApp.sendEmail` のオプション引数 (`cc` や `bcc` ではなく、別のメール送信処理を追加) を使って、<br>
+                    件名「[新規問い合わせ] 〇〇様より」として管理者に通知を送るコードを追加してください。
+                </div>
+            </div>
+        </div>
+
+        <!-- SESSION 4 -->
+        <div id="session4" class="section-content">
+            <div class="blackboard-header">
+                <h1>4限目：データと「対話」する</h1>
+                <p>Python / スクレイピング / データ分析</p>
+            </div>
+
+            <div class="tabs">
+                <div class="tab active" onclick="switchTab('s4', 'agenda')">⏱ 今日のアジェンダ</div>
+                <div class="tab" onclick="switchTab('s4', 'lecture')">🎓 座学 (Deep Dive)</div>
+                <div class="tab" onclick="switchTab('s4', 'practice')">💻 実践 (呪文集)</div>
+            </div>
+
+            <!-- S4: Agenda -->
+            <div id="s4-agenda" class="tab-content">
+                <div class="card">
+                    <h2>今日のゴール</h2>
+                    <p>Web上の膨大なデータを自動収集(スクレイピング)し、分析・可視化するツールを作ること。<br>
+                        <strong>「人力では不可能なスピードでの情報収集」</strong>を体験し、バイブコーディングの総仕上げとします。
+                    </p>
+                </div>
+                <table class="agenda-table">
+                    <tr>
+                        <th width="20%">時間</th>
+                        <th>内容</th>
+                    </tr>
+                    <tr>
+                        <td>00:00 - 00:15</td>
+                        <td><strong>座学：Python & ライブラリ</strong><br>Requests, BeautifulSoup, Pandas解説</td>
+                    </tr>
+                    <tr>
+                        <td>00:15 - 00:45</td>
+                        <td><strong>実技：スクレイピング</strong><br>ニュースサイトからのデータ収集 & CSV保存</td>
+                    </tr>
+                    <tr>
+                        <td>00:45 - 01:15</td>
+                        <td><strong>実技：分析 & 可視化</strong><br>キーワード集計とグラフ描画</td>
+                    </tr>
+                    <tr>
+                        <td>01:15 - 01:30</td>
+                        <td><strong>卒業制作発表</strong><br>全4回の総まとめ</td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- S4: Lecture -->
+            <div id="s4-lecture" class="tab-content" style="display:none;">
+                <div class="card">
+                    <h2>Pythonの武器（ライブラリ）</h2>
+                    <p>Pythonが強いのは、天才たちが作った「道具箱」が無限にあるからです。</p>
+                    <ul>
+                        <li><strong>Requests</strong>: 人間の代わりにURLをクリックし、ページのデータを取ってくる道具。</li>
+                        <li><strong>BeautifulSoup</strong>: 取ってきたデータ（HTMLの闇鍋）から、欲しい情報（文字やお玉）だけを掬い取る道具。</li>
+                        <li><strong>Pandas</strong>: データ分析の王様。Excelの100倍速い表計算ソフトだと思ってください。</li>
+                        <li><strong>Matplotlib / Seaborn</strong>: データをグラフ（画像）にする画家。</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h2>スクレイピングのマナー ⚠️</h2>
+                    <p><strong>「DoS攻撃」にならないために。</strong></p>
+                    <ul>
+                        <li><strong>Waitを入れる</strong>: <code>time.sleep(1)</code> などで、1秒に1回しかアクセスしないようにする。これ絶対。</li>
+                        <li><strong>robots.txt</strong>: サイトには「入っていい場所悪い場所」を書いた看板があります。</li>
+                        <li><strong>利用規約</strong>: そもそもスクレイピング禁止のサイトもあります（Amazonなど厳しい）。今回は許可されている学習用サイトや、規約の範囲内で行います。
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- S4: Practice -->
+            <div id="s4-practice" class="tab-content" style="display:none;">
+                <h2>🐍 Step 1: ニュース収集 (Scraping)</h2>
+                <div class="prompt-box">
+                    <span class="prompt-label">Prompt 1 (Get Data)</span>
+                    <button class="copy-btn" onclick="copyText(this)">コピーする</button>
+                    Pythonでスクレイピングを行います。以下の要件でコードを書いてください。<br><br>
+                    1. **対象サイト**: Yahoo!ニュースのトピックス一覧 (https://news.yahoo.co.jp/topics/top-picks)<br>
+                    2. **取得するデータ**: 記事の「見出しタイトル」と「URL」<br>
+                    3. **保存形式**: `news_list.csv` (カラム: title, url, encoding: utf-8-sig)<br>
+                    4. **使うライブラリ**: requests, BeautifulSoup<br><br>
+                    **重要**: サーバーに負荷をかけないよう、リクエスト間には必ず1秒以上の `time.sleep` を入れてください。<br>
+                    また、User-Agentヘッダーを設定してブラウザからのアクセスに見えるようにしてください。
+                </div>
+
+                <h2>📊 Step 2: データ分析 (Logic)</h2>
+                <div class="prompt-box">
+                    <span class="prompt-label">Prompt 2 (Filter)</span>
+                    <button class="copy-btn" onclick="copyText(this)">コピーする</button>
+                    さっき保存した `news_list.csv` を使ってデータ分析をします。<br>
+                    `pandas` ライブラリを使って以下の処理を行ってください。<br><br>
+                    1. CSV読み込み。<br>
+                    2. `title` カラムに「政治」または「経済」に関連するキーワードが含まれている行をフィルタリング。<br>
+                    3. その件数をカウントして表示。<br>
+                    4. 該当する記事のタイトル一覧も表示。
+                </div>
+
+                <h2>📈 Step 3: 可視化 (Graph)</h2>
+                <div class="prompt-box">
+                    <span class="prompt-label">Prompt 3 (Visual)</span>
+                    <button class="copy-btn" onclick="copyText(this)">コピーする</button>
+                    分析結果をわかりやすく棒グラフにしてください。<br>
+                    `matplotlib` ライブラリを使って、以下のグラフを描画・保存 (`graph.png`) してください。<br><br>
+                    - X軸: カテゴリ（例：政治含む、その他）<br>
+                    - Y軸: 記事数<br><br>
+                    ※グラフ内の日本語が文字化けしないように、`japanize_matplotlib` を使うか、フォント設定を適切に行ってください。<br>
+                    エラーが出た場合は対処法も教えてください。
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            // Sidebar active state
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Show content
+            document.querySelectorAll('.section-content').forEach(el => el.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        function switchTab(sessionPrefix, tabName) {
+            // Find inputs
+            const tabsContainer = event.target.parentElement;
+            tabsContainer.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Hide all tab contents in this session
+            const section = document.getElementById(extractSessionId(sessionPrefix));
+            const contents = section.querySelectorAll('.tab-content');
+            contents.forEach(el => el.style.display = 'none');
+
+            // Show target
+            document.getElementById(`${sessionPrefix}-${tabName}`).style.display = 'block';
+        }
+
+        // Helper to map s1 -> session1 (though ID usage implies direct child selector is safer)
+        function extractSessionId(prefix) {
+            if (prefix === 's1') return 'session1';
+            if (prefix === 's2') return 'session2';
+            if (prefix === 's3') return 'session3';
+            if (prefix === 's4') return 'session4';
+            return prefix;
+        }
+
+        function copyText(btn) {
+            const text = btn.parentElement.innerText.replace(btn.innerText, '').replace('Prompt 1 (UI)', '').replace('Prompt 2 (Logic)', '').replace('Prompt 3 (Biz Logic)', '').replace('Prompt 1 (Get Data)', '').replace('Prompt 1 (Base)', '').replace('Prompt 2 (Filter)', '').replace('Prompt 3 (Visual)', '').replace('Prompt 3 (Admin)', '').replace(/Prompt \d+ \(.+\)/g, '').trim();
+            // Cleanup label text from copy
+
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = btn.innerText;
+                btn.innerText = 'Copied! ✨';
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+
+</html>
