@@ -357,10 +357,126 @@
         <div class="nav-item" onclick="showSection('session3')">🤖 3限目 GAS</div>
         <div class="nav-item" onclick="showSection('session4')">🐍 4限目 Python</div>
         <div class="nav-item" onclick="showSection('session5')">🚀 補講 Deploy</div>
+        <div class="nav-item" onclick="showSection('appendix')">📚 用語集</div>
     </div>
 
     <!-- Main Content -->
     <div class="main">
+
+        <!-- INTRO -->
+        <!-- (Existing Intro) -->
+
+        <!-- ... (Sections 1-5 same as before) ... -->
+
+        <!-- APPENDIX: Glossary -->
+        <div id="appendix" class="section-content">
+            <div class="blackboard-header">
+                <h1>バイブコーディング用語集</h1>
+                <p>〜 呪文の意味を知れば、魔法はもっと強くなる 〜</p>
+            </div>
+
+            <div class="tab-content">
+                <div class="card">
+                    <h2>🔰 基本のキ (Basics)</h2>
+                    <dl style="display: grid; grid-template-columns: 1fr 2fr; gap: 15px; margin-top: 15px;">
+                        <dt><strong>Antigravity</strong></dt>
+                        <dd>Googleが作った次世代のAIエディタ。ただコードを書くだけでなく、実行・修正・デプロイまで「バイブス（ノリ）」で完結させる魔法の杖。</dd>
+
+                        <dt><strong>Prompt (プロンプト)</strong></dt>
+                        <dd>AIへの「指示書」や「呪文」。これが具体的であるほど、AIは良い仕事をする。「いい感じで」は禁句。</dd>
+
+                        <dt><strong>Bug (バグ)</strong></dt>
+                        <dd>プログラムの不具合。昔のコンピュータに蛾（虫）が挟まって動かなくなったことが由来。見つけたらラッキー（成長のチャンス）。</dd>
+
+                        <dt><strong>Deploy (デプロイ)</strong></dt>
+                        <dd>作ったアプリを本番環境（サーバーなど）に配置して、使える状態にすること。「発射」「展開」という意味。</dd>
+                    </dl>
+                </div>
+
+                <div class="card">
+                    <h2>🎨 Webフロントエンド (Session 1 & 2)</h2>
+                    <dl style="display: grid; grid-template-columns: 1fr 2fr; gap: 15px; margin-top: 15px;">
+                        <dt><strong>HTML</strong></dt>
+                        <dd>Webページの「骨組み」。見出し(h1)や段落(p)などを定義するマークアップ言語。</dd>
+
+                        <dt><strong>CSS</strong></dt>
+                        <dd>Webページの「見た目」。色、大きさ、配置などを指定するスタイリング言語。</dd>
+
+                        <dt><strong>DOM Tree</strong></dt>
+                        <dd>HTMLのタグが入れ子状（親・子・孫）になっている構造のこと。家系図やマトリョーシカのようなもの。</dd>
+
+                        <dt><strong>Responsive</strong></dt>
+                        <dd>スマホ、タブレット、PCなど、画面サイズに合わせてレイアウトが柔軟に変わるデザイン。</dd>
+
+                        <dt><strong>React</strong></dt>
+                        <dd>Facebook(Meta)が作った、ユーザーインターフェースを作るためのJavaScriptライブラリ。現代のWeb開発の主流。</dd>
+
+                        <dt><strong>Component</strong></dt>
+                        <dd>ボタンやヘッダーなど、画面の部品をレゴブロックのように独立させて作る考え方。</dd>
+
+                        <dt><strong>State (状態)</strong></dt>
+                        <dd>アプリの中で変化するデータ（点数、入力文字、ON/OFFなど）。これが変わると、画面も自動で書き換わる。</dd>
+                    </dl>
+                </div>
+
+                <div class="card">
+                    <h2>🤖 自動化 & サーバー (Session 3)</h2>
+                    <dl style="display: grid; grid-template-columns: 1fr 2fr; gap: 15px; margin-top: 15px;">
+                        <dt><strong>GAS (Google Apps Script)</strong></dt>
+                        <dd>Googleのサービス（Gmail, Sheets, Driveなど）をプログラムで操れるJavaScriptベースの言語。</dd>
+
+                        <dt><strong>Server-side</strong></dt>
+                        <dd>ユーザーのブラウザではなく、インターネットの向こう側（サーバー）で動くプログラム。</dd>
+
+                        <dt><strong>Trigger (トリガー)</strong></dt>
+                        <dd>プログラムを実行する「きっかけ」。例：「毎日朝9時に」「フォームが送信されたら」。</dd>
+
+                        <dt><strong>API</strong></dt>
+                        <dd>ソフトウェア同士が会話するための窓口。GASからLINEを送ったり色々なことができる。</dd>
+                    </dl>
+                </div>
+
+                <div class="card">
+                    <h2>🐍 データサイエンス (Session 4)</h2>
+                    <dl style="display: grid; grid-template-columns: 1fr 2fr; gap: 15px; margin-top: 15px;">
+                        <dt><strong>Python</strong></dt>
+                        <dd>AIやデータ分析に強いプログラミング言語。読みやすく、強力なライブラリ（道具箱）が豊富。</dd>
+
+                        <dt><strong>Library (ライブラリ)</strong></dt>
+                        <dd>先人が作ってくれた便利なプログラム集。「車輪の再発明」を避けるために使う。</dd>
+
+                        <dt><strong>Scraping (スクレイピング)</strong></dt>
+                        <dd>Webサイトから自動で情報を収集する技術。相手に負荷をかけないようマナーを守る必要がある。</dd>
+
+                        <dt><strong>Pandas</strong></dt>
+                        <dd>Pythonでデータを表形式（Excelのような形）で扱うためのライブラリ。データ分析の必須ツール。</dd>
+                    </dl>
+                </div>
+
+                <div class="card">
+                    <h2>🚀 インフラ & 開発ツール (Session 5)</h2>
+                    <dl style="display: grid; grid-template-columns: 1fr 2fr; gap: 15px; margin-top: 15px;">
+                        <dt><strong>Git (ギット)</strong></dt>
+                        <dd>ファイルの変更履歴を記録・管理するツール。ゲームのセーブ機能のようなもの。</dd>
+
+                        <dt><strong>GitHub</strong></dt>
+                        <dd>Gitのデータをネット上に保存できるサービス。プログラマーのSNS兼ポートフォリオ。</dd>
+
+                        <dt><strong>Repository (リポジトリ)</strong></dt>
+                        <dd>ファイルや変更履歴を全部しまっておく「貯蔵庫」。プロジェクトごとに作る。</dd>
+
+                        <dt><strong>Push / Pull</strong></dt>
+                        <dd>Pushは「アップロード（自分のPC→ネット）」、Pullは「ダウンロード（ネット→自分のPC）」。</dd>
+
+                        <dt><strong>Hosting (ホスティング)</strong></dt>
+                        <dd>Webサイトのデータをサーバーに置いて、インターネット経由で誰でも見られる状態にすること。</dd>
+
+                        <dt><strong>CI/CD</strong></dt>
+                        <dd>「継続的インテグレーション/デリバリー」。コードを保存したら、自動でテストして本番公開までやってくれる仕組み（Vercelなど）。</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
 
         <!-- INTRO -->
         <div id="intro" class="section-content active">
