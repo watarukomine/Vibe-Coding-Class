@@ -1,5 +1,6 @@
 {
   "artifactType": "ARTIFACT_TYPE_OTHER",
-  "summary": "Prompts for Session 5: Deployment. Contains commands for git initialization and Firebase deployment.",
-  "updatedAt": "2026-01-23T01:25:09.303501Z"
+  "summary": "Prompts for Session 5: Deployment. Updated to include Vercel GUI steps.",
+  "updatedAt": "2026-01-23T01:28:27.060778Z",
+  "version": "1"
 }

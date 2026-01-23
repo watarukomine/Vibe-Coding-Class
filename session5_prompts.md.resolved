@@ -23,7 +23,7 @@ git push -u origin main
 
 ---
 
-## 🔥 Step 2: Firebaseで公開 (Hosting)
+## 🔥 Step 2: Firebaseで公開 (コマンド派)
 
 ```bash
 # 1. ツールを入れる (初回のみ)
@@ -40,3 +40,17 @@ firebase init hosting
 npm run build   # (Reactの場合)
 firebase deploy
 ```
+
+---
+
+## ▲ Step 3: Vercelで公開 (GUI派)
+
+コマンド不要！マウス操作だけで「自動公開」環境を作ります。
+
+1. [Vercel公式サイト](https://vercel.com/) へGo。
+2. **Continue with GitHub** でログイン。
+3. **Add New...** > **Project** をクリック。
+4. さっき作ったリポジトリ (`my-vibe-app`) を **Import**。
+5. 設定はいじらず **Deploy** ボタンをドーン！
+
+🎊 これで「修正してGitHubにPush」するだけで、勝手に本番サイトも更新されます。
