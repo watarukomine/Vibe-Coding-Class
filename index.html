@@ -343,6 +343,86 @@
             color: #e65100;
             font-family: 'Yomogi', cursive;
         }
+
+        /* Refactored Styles */
+        .glossary-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .step-prep-box {
+            background: rgba(255, 255, 255, 0.5);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-color);
+            margin-bottom: 20px;
+        }
+
+        .terminal-code {
+            background: #333;
+            color: #fff;
+            padding: 5px;
+            border-radius: 4px;
+            margin-top: 5px;
+            display: block;
+            overflow-x: auto;
+        }
+
+        /* Intro Section Styles */
+        .intro-tab-content {
+            min-height: 200px;
+            text-align: center;
+        }
+
+        .intro-text {
+            max-width: 600px;
+            margin: 30px auto;
+            text-align: left;
+        }
+
+        .intro-cards {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .intro-card {
+            padding: 20px;
+            border-radius: 15px;
+            width: 200px;
+            border: 2px solid;
+        }
+
+        .intro-card-agenda {
+            background: #fff3e0;
+            border-color: #ffe0b2;
+        }
+
+        .intro-card-lecture {
+            background: #e1f5fe;
+            border-color: #b3e5fc;
+        }
+
+        .intro-card-practice {
+            background: #e8f5e9;
+            border-color: #c8e6c9;
+        }
+
+        .start-button {
+            background: var(--accent-color);
+            color: #fff;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(255, 112, 67, 0.3);
+            font-family: 'Yomogi', cursive;
+        }
     </style>
 </head>
 
@@ -378,7 +458,7 @@
             <div class="tab-content">
                 <div class="card">
                     <h2>🔰 基本のキ (Basics)</h2>
-                    <dl style="display: grid; grid-template-columns: 1fr 2fr; gap: 15px; margin-top: 15px;">
+                    <dl class="glossary-grid">
                         <dt><strong>Antigravity (アンチグラビティ)</strong></dt>
                         <dd>Googleが作った次世代のAIエディタ。ただコードを書くだけでなく、実行・修正・デプロイまで「バイブス（ノリ）」で完結させる魔法の杖。</dd>
 
@@ -404,7 +484,7 @@
 
                 <div class="card">
                     <h2>🎨 Webフロントエンド (Session 1 & 2)</h2>
-                    <dl style="display: grid; grid-template-columns: 1fr 2fr; gap: 15px; margin-top: 15px;">
+                    <dl class="glossary-grid">
                         <dt><strong>HTML (エイチティーエムエル)</strong></dt>
                         <dd>Webページの「骨組み」。見出し(h1)や段落(p)などを定義するマークアップ言語。</dd>
 
@@ -448,7 +528,7 @@
 
                 <div class="card">
                     <h2>🤖 自動化 & サーバー (Session 3)</h2>
-                    <dl style="display: grid; grid-template-columns: 1fr 2fr; gap: 15px; margin-top: 15px;">
+                    <dl class="glossary-grid">
                         <dt><strong>GAS (ガス / グーグル・アップス・スクリプト)</strong></dt>
                         <dd>Googleのサービス（Gmail, Sheets, Driveなど）をプログラムで操れるJavaScriptベースの言語。</dd>
 
@@ -477,7 +557,7 @@
 
                 <div class="card">
                     <h2>🐍 データサイエンス (Session 4)</h2>
-                    <dl style="display: grid; grid-template-columns: 1fr 2fr; gap: 15px; margin-top: 15px;">
+                    <dl class="glossary-grid">
                         <dt><strong>Python (パイソン)</strong></dt>
                         <dd>AIやデータ分析に強いプログラミング言語。読みやすく、強力なライブラリ（道具箱）が豊富。</dd>
 
@@ -506,7 +586,7 @@
 
                 <div class="card">
                     <h2>🚀 インフラ & 開発ツール (Session 5)</h2>
-                    <dl style="display: grid; grid-template-columns: 1fr 2fr; gap: 15px; margin-top: 15px;">
+                    <dl class="glossary-grid">
                         <dt><strong>Git (ギット)</strong></dt>
                         <dd>ファイルの変更履歴を記録・管理するツール。ゲームのセーブ機能のようなもの。</dd>
 
@@ -554,28 +634,25 @@
                 <p>〜 Antigravityと創る次世代開発マスタークラス 〜</p>
             </div>
 
-            <div class="tab-content" style="min-height: 200px; text-align: center;">
+            <div class="tab-content intro-tab-content">
                 <h2>👋 先生、準備はいいですか？</h2>
-                <div style="max-width: 600px; margin: 30px auto; text-align: left;">
+                <div class="intro-text">
                     <p>このダッシュボードは、講義を成功させるための司令塔です。<br>
                         各回の授業は、以下の<strong>3つのタブ</strong>で構成されています。</p>
                 </div>
 
-                <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
-                    <div
-                        style="background:#fff3e0; padding:20px; border-radius:15px; width:200px; border:2px solid #ffe0b2;">
+                <div class="intro-cards">
+                    <div class="intro-card intro-card-agenda">
                         <div style="font-size:40px;">⏱</div>
                         <h3>今日のアジェンダ</h3>
                         <p style="font-size:0.9rem;">タイムスケジュール、本日のゴール、準備物の確認。</p>
                     </div>
-                    <div
-                        style="background:#e1f5fe; padding:20px; border-radius:15px; width:200px; border:2px solid #b3e5fc;">
+                    <div class="intro-card intro-card-lecture">
                         <div style="font-size:40px;">🎓</div>
                         <h3>座学 (Deep Dive)</h3>
                         <p style="font-size:0.9rem;">専門用語の解説、仕組みの図解など、さらに詳しい知識。</p>
                     </div>
-                    <div
-                        style="background:#e8f5e9; padding:20px; border-radius:15px; width:200px; border:2px solid #c8e6c9;">
+                    <div class="intro-card intro-card-practice">
                         <div style="font-size:40px;">💻</div>
                         <h3>実践 (Hands-on)</h3>
                         <p style="font-size:0.9rem;">実技の手順と、Antigravityへの「呪文(プロンプト)」集。</p>
@@ -583,8 +660,7 @@
                 </div>
 
                 <div style="margin-top: 50px;">
-                    <button onclick="showSection('session1'); switchTab('s1', 'agenda');"
-                        style="background:var(--accent-color); color:#fff; border:none; padding:15px 40px; font-size:1.2rem; border-radius:50px; cursor:pointer; font-weight:bold; box-shadow:0 5px 15px rgba(255,112,67,0.3); font-family:'Yomogi', cursive;">
+                    <button onclick="showSection('session1'); switchTab('s1', 'agenda');" class="start-button">
                         1限目の授業へ行く 👉
                     </button>
                 </div>
@@ -696,14 +772,12 @@
                     antigravity hello</div>
 
                 <h2>📁 Step 0: フォルダの準備</h2>
-                <div
-                    style="background: rgba(255, 255, 255, 0.5); padding: 15px; border-radius: 8px; border-left: 4px solid var(--accent-color); margin-bottom: 20px;">
+                <div class="step-prep-box">
                     <strong>作業を始める前に...</strong>
                     <ol style="margin-top: 5px; margin-left: 20px;">
                         <li>デスクトップに <code>vibe_course</code> という名前のフォルダを作ってください。</li>
                         <li>ターミナルで以下のコマンドを打ち、そのフォルダに移動します。
-                            <pre
-                                style="background: #333; color: #fff; padding: 5px; border-radius: 4px; margin-top: 5px;">cd Desktop/vibe_course</pre>
+                            <pre class="terminal-code">cd Desktop/vibe_course</pre>
                         </li>
                         <li>ここが今日の作業場所です！作られるファイルは全部ここに入ります。</li>
                     </ol>
@@ -1219,7 +1293,8 @@
                 <h2>▲ Step 3: Vercelで公開 (GUI派)</h2>
                 <p>コマンド不要！ブラウザ操作だけで「自動公開」環境を作ります。</p>
                 <ol>
-                    <li><a href="https://vercel.com" target="_blank">Vercel公式サイト</a>へ行き、<strong>Continue with
+                    <li><a href="https://vercel.com" target="_blank"
+                            rel="noopener noreferrer">Vercel公式サイト</a>へ行き、<strong>Continue with
                             GitHub</strong> でログイン。</li>
                     <li><strong>Add New...</strong> > <strong>Project</strong> をクリック。</li>
                     <li>さっき作ったリポジトリ (`my-vibe-app`) を <strong>Import</strong>。</li>
