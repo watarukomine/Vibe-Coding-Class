@@ -1,0 +1,42 @@
+# 🪄 補講：世界へデビューする呪文集 (Deploy)
+
+自分の作ったアプリをインターネットの大海原へ公開するためのコマンド集です。
+※今回はAIへのプロンプトではなく、ターミナルに入力する「コマンド」が中心です。
+
+---
+
+## 🐙 Step 1: GitHubに保存 (Commit & Push)
+
+Antigravity (VS Code) のターミナルで実行します。
+
+```bash
+# 1. 準備 (初回のみ)
+git init
+git add .
+git commit -m "First vibe check"
+
+# 2. GitHubとつなぐ (your-nameなどは自分のものに変えてね)
+git remote add origin https://github.com/your-name/my-vibe-app.git
+git branch -M main
+git push -u origin main
+```
+
+---
+
+## 🔥 Step 2: Firebaseで公開 (Hosting)
+
+```bash
+# 1. ツールを入れる (初回のみ)
+npm install -g firebase-tools
+
+# 2. ログイン
+firebase login
+
+# 3. 初期設定
+firebase init hosting
+# -> 質問には "y", "Create new", "dist" (または public), "y", "n" と答えるのが基本！
+
+# 4. 公開
+npm run build   # (Reactの場合)
+firebase deploy
+```
