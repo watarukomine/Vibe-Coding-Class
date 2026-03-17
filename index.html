@@ -677,7 +677,7 @@
             <div class="tabs">
                 <div class="tab active" onclick="switchTab('s1', 'agenda')">⏱ 今日のアジェンダ</div>
                 <div class="tab" onclick="switchTab('s1', 'lecture')">🎓 座学 (Deep Dive)</div>
-                <div class="tab" onclick="switchTab('s1', 'practice')">💻 実践 (呪文集)</div>
+                <div class="tab" onclick="switchTab('s1', 'practice')">💻 実践：魔法のポートフォリオ制作</div>
             </div>
 
             <!-- S1: Agenda -->
@@ -757,80 +757,79 @@
 
             <!-- S1: Practice -->
             <div id="s1-practice" class="tab-content" style="display:none;">
-                <h2>🛠 Step 0: 環境構築</h2>
-                <div class="code-block">
-                    # Mac (Terminal)
-                    brew install python
-                    pip install antigravity-cli
-
-                    # Windows (PowerShell)
-                    # 公式サイトからインストーラーDL & 実行
-                    pip install antigravity-cli
-
-                    # ログイン & 確認
-                    antigravity login
-                    antigravity hello</div>
-
-                <h2>📁 Step 0: フォルダの準備</h2>
-                <div class="step-prep-box">
-                    <strong>作業を始める前に...</strong>
-                    <ol style="margin-top: 5px; margin-left: 20px;">
-                        <li>デスクトップに <code>vibe_course</code> という名前のフォルダを作ってください。</li>
-                        <li>ターミナルで以下のコマンドを打ち、そのフォルダに移動します。
-                            <pre class="terminal-code">cd Desktop/vibe_course</pre>
-                        </li>
-                        <li>ここが今日の作業場所です！作られるファイルは全部ここに入ります。</li>
-                    </ol>
+                <div class="card" style="border-left: 6px solid #4fc3f7; background: #e1f5fe;">
+                    <h2 style="border-bottom: none; margin: 0;">🏰 クエスト：自分だけの城を建てる</h2>
+                    <p style="margin-top: 5px;">一行もコードを書かずに、AI（Antigravity）に指示を出してWebサイトを完成させましょう。</p>
                 </div>
 
-                <h2>🎨 Step 1: ベースを作成する</h2>
-                <p>まずは土台を作らせます。以下のプロンプトを生徒に共有してください。</p>
+                <h3>⚔️ Step 0: 準備（環境と場所）</h3>
+                <div class="step-prep-box">
+                    <p>まずは魔法を唱えるための「杖」と「作業台」を用意します。</p>
+                    <div class="code-block">
+                        # 魔法の杖（Antigravity）をインストール
+                        pip install antigravity-cli
+
+                        # 魔法の練習場（ログイン）
+                        antigravity login</div>
+                    
+                    <div style="margin-top: 15px;">
+                        <strong>作業場所（フォルダ）の作成:</strong>
+                        <ol style="margin-top: 5px; margin-left: 20px;">
+                            <li>デスクトップに <code>vibe_course</code> フォルダを作成。</li>
+                            <li>ターミナルで移動: <pre class="terminal-code" style="display: inline; padding: 2px 6px;">cd Desktop/vibe_course</pre></li>
+                        </ol>
+                    </div>
+                </div>
+
+                <h3>📜 Step 1: 最初の召喚（ベース作成）</h3>
+                <p>何もない場所に、土台となるHTMLとCSSを召喚します。以下の呪文をコピーしてAntigravityに送ってください。</p>
 
                 <div class="prompt-box">
-                    <span class="prompt-label">Prompt 1</span>
+                    <span class="prompt-label">呪文（Prompt 1）</span>
                     <button class="copy-btn" onclick="copyText(this)">コピーする</button>
-                    HTML5とCSS3を使って、私の「Webポートフォリオサイト」を作ってください。<br><br>
-                    【要件】<br>
-                    1. ヒーローセクション（ファーストビュー）：名前とキャッチコピー、背景はおしゃれなグラデーション。<br>
-                    2. 自己紹介セクション：プロフィール画像とテキスト。<br>
-                    3. スキルセクション：できることをアイコン付きでカード形式で並べる。<br>
-                    4. 全体的に「シンプルモダン」なデザインで、レスポンシブ対応（スマホ対応）も必須です。<br>
+                    HTML5とCSS3を使って、私の「Webポートフォリオサイト」を作ってください。
+                    【要件】
+                    1. ヒーローセクション：おしゃれなグラデーション背景、名前とキャッチコピー。
+                    2. 自己紹介セクション：プロフィール画像（仮）とテキスト。
+                    3. スキルセクション：できることをアイコン付きのカード形式で。
+                    4. 全体的に「シンプルモダン」でレスポンシブ（スマホ対応）なデザインに。
                     5. ファイルは `index.html` と `style.css` に分けて保存してください。
                 </div>
+                
+                <div class="card" style="background: #fff9c4; border: 1px solid #fbc02d;">
+                    <strong>✨ 召喚の成果（期待されること）:</strong>
+                    <ul>
+                        <li>フォルダ内に <code>index.html</code> と <code>style.css</code> が現れます。</li>
+                        <li>ブラウザで開くと、色鮮やかなサイトの土台が出来上がっています！</li>
+                    </ul>
+                </div>
 
-                <h2>🔧 Step 2: 修正指示 (イテレーション)</h2>
-                <p>一度で完璧なものは出ません。「対話」して直していく過程を見せます。</p>
+                <h3>🛠 Step 2: 魔法を磨く（ブラッシュアップ）</h3>
+                <p>一度の召喚で完璧とは限りません。AIと対話して、より自分好みに魔改造しましょう。</p>
 
                 <div class="prompt-box">
-                    <span class="prompt-label">Prompt 2</span>
+                    <span class="prompt-label">強化の呪文（Prompt 2）</span>
                     <button class="copy-btn" onclick="copyText(this)">コピーする</button>
-                    ありがとうございます！とても良いですが、以下の点を修正してください。<br><br>
-                    1. 全体のフォントを「Noto Sans JP」などのGoogle Fontsを使って見やすくしてください。<br>
-                    2. ヒーローセクションの文字色が背景に埋もれて見にくいです。文字に影をつけるか、背景色を調整してコントラストを上げてください。<br>
-                    3. スキルセクションのカードに、マウスを乗せたとき（ホバー時）にふわっと浮き上がるアニメーションを追加してください。
+                    ありがとうございます！さらに以下の魔法をかけてください。
+                    1. フォントを「Google Fonts（Noto Sans JPなど）」にして、高級感を出してください。
+                    2. ヒーローセクションの文字をもう少し大きく、読みやすく調整してください。
+                    3. スキルのカードに、マウスを乗せた時に「ふわっと浮く」アニメーションを追加してください。
                 </div>
 
-                <h2>🚀 Step 3: 確認・公開</h2>
-                <p>Antigravityで作ったファイルがどこにあるか確認して、ブラウザで開いてみましょう。エディタの下にある黒い画面（ターミナル）を使います。</p>
-                <div
-                    style="background: rgba(255, 255, 255, 0.5); padding: 15px; border-radius: 8px; border-left: 4px solid var(--accent-color);">
-                    <strong>おすすめ：フォルダを開いてWクリック</strong>
-                    <p style="font-size: 0.9rem; margin-bottom: 10px;">「このファイルが入っているフォルダを開け！」という命令を出します。</p>
-                    <ul style="margin-top: 5px;">
-                        <li>Mac: <code>open .</code> （open スペース ドット）</li>
-                        <li>Win: <code>start .</code> （start スペース ドット）</li>
-                    </ul>
-                    <p style="font-size: 0.9rem; margin-top: 10px;">→ フォルダが開いたら、中にある <code>index.html</code>
-                        をダブルクリックすれば完了です！</p>
-
-                    <hr style="border: 0; border-top: 1px dashed #ccc; margin: 10px 0;">
-
-                    <strong>参考：コマンド一発で開く場合</strong>
-                    <ul style="margin-top: 5px;">
-                        <li>Mac: <code>open index.html</code></li>
-                        <li>Win: <code>start index.html</code></li>
-                    </ul>
+                <div class="card" style="background: #e8f5e9; border-left: 6px solid #4caf50;">
+                    <strong>💡 バイブスのコツ（Pro Tips）:</strong>
+                    <p style="font-size: 0.95rem;">「なんかダサい」と思う時は、<strong>「ネオン風にして」「ミニマルな白黒にして」「余白をもっとゆったりさせて」</strong>など、具体的な単語を混ぜるとAIは覚醒します。</p>
                 </div>
+
+                <h3>🌍 Step 3: 世界に披露する（プレビュー）</h3>
+                <p>完成した魔法の成果をブラウザで確認しましょう。</p>
+                <div class="code-block">
+                    # Macの方
+                    open index.html
+
+                    # Windowsの方
+                    start index.html</div>
+                <p style="text-align: center; font-weight: bold; color: #ff7043; margin-top: 20px;">🎉 これであなたもバイブス・コーダーです！</p>
             </div>
         </div>
 
